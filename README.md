@@ -1,7 +1,6 @@
 # Desafio Pokedex
 Desafio de construção de uma Dashboard / Vitrine Interativa com Consumo de API Externa
 
-<img alt="PokePet" style="width: 100%" src="https://github.com/user-attachments/assets/ee3aeb49-e1f8-459e-b9f0-546bfe481686"  />
 
 ## Sobre
 O projeto foi desenvolvido com **React** e **Next.js**, consumindo a **PokéAPI** para exibir dados de Pokémons em uma aplicação web totalmente responsiva, adaptada a diferentes tamanhos de tela. Server Components e Client Components foram utilizados conforme a necessidade de cada parte do projeto, otimizando performance e interatividade.
