@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3B4CCA;
+  --color-secondary: #FF0000;
+  --color-accent: #FFDE00;
+  --color-gold: #B3A125;
+  --color-navy: #1D2C5E;
+
+  --font-pokemon: "pokemon-solid", sans-serif;
+  --font-hollow: "pokemon-hollow", sans-serif;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@font-face {
+  font-family: 'pokemon-hollow';
+  src: url('/fonts/PokemonHollow.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'pokemon-solid';
+  src: url('/fonts/PokemonSolid.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Merriweather', serif;
+}
