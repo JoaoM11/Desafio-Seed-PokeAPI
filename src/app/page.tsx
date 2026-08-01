@@ -1,18 +1,27 @@
+"use client";
+
 import { Button } from "../components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
+
+  const scrollToCenter = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
   return (
     <main className="relative pt-16 lg:pt-20">
       <div
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{
-          backgroundImage: "url('./public/images/FundoSite.jpeg')",
+          backgroundImage: "url('/images/FundoSite.jpeg')",
         }}
       />
       <div className="fixed inset-0 -z-10 bg-white/80 pointer-events-none" />
 
-      <header className="fixed top-0 left-0 w-full h-16 lg:h-20 bg-white flex items-center justify-between px-4 lg:px-20 z-[999]">
+      <header className="fixed top-0 left-0 w-full h-16 lg:h-20 bg-[#FFDE00] flex items-center justify-between px-4 lg:px-20 z-[999]">
         <div className="flex items-center">
           <Link href="/" className="flex items-center -gap-3">
             <img
@@ -22,7 +31,7 @@ export default function Home() {
             />
 
             <div className="flex items-center leading-none mt-[-10px] lg:mt-[-10px]">
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-hollow text-[#3B4CCA]">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-pokemon text-[#3B4CCA]">
                 Poke
               </h1>
               <h1 className="text-xl md:text-2xl lg:text-3xl font-pokemon text-[#FF0000]">
@@ -32,19 +41,19 @@ export default function Home() {
           </Link>
         </div>
 
-        <nav className="hidden lg:flex items-center gap-6 lg:text-xl text-black z-[1000] ">
+        <nav className="flex items-center gap-6 lg:text-xl text-black z-[1000]">
           <a
-            href="#sobre-nos"
+            onClick={() => scrollToCenter("sobre-nos")}
             className="cursor-pointer hover:underline underline-offset-4 decoration-[#FFDE00] decoration-2 transition-all"
           >
             Sobre nós
           </a>
 
           <a
-            href="#nossa-proposta"
+            onClick={() => scrollToCenter("objetivo")}
             className="cursor-pointer hover:underline underline-offset-4 decoration-[#FFDE00] decoration-2 transition-all"
           >
-            Nossa Proposta
+            Objetivo
           </a>
 
           <Link
@@ -70,15 +79,15 @@ export default function Home() {
                   </h1>
                 </div>
               </div>
-              <p className="text-black text-xs md:text-base lg:text-xl text-center">
-                Sua Vitrine de Pokemons!
+             <p className="text-black text-lg md:text-2xl lg:text-4xl text-center">
+                Descubra o mundo Pokémon!
               </p>
             </div>
             <Link
               href="/vitrine"
               className="flex w-32 h-8 md:w-64 md:h-10 lg:w-128 lg:h-16"
             >
-              <Button label="Ver Catálogo!" variant="CTA"></Button>
+              <Button label="Acessar Poke10!" variant="CTA"></Button>
             </Link>
           </div>
         </div>
@@ -97,44 +106,48 @@ export default function Home() {
           </span>
         </div>
 
-        <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-10 lg:px-20">
-          <div className="md:w-1/2 lg:w-1/2 px-4 md:px-6 lg:px-10">
-            <p className="text-black text-xs md:text-base lg:text-2xl indent-8 leading-relaxed text-justify px-4 md:px-6 lg:px-8">
-              Somos uma fan-made pokedex com o intuito de funcionar como um
-              trade center de Pokemons! Conquiste pokemons que você ainda não
-              possui em sua pokedex ou ofereça seus repetidos para outros
-              usuários adquirirem. Entre em nosso catálogo e veja nossa
-              disponibilidade de trocas!
+        <div className="flex flex-col md:flex-row lg:flex-row items-center justify-center w-full max-w-7xl mx-auto gap-10 lg:px-20">
+          <div className="w-full max-w-3xl mx-auto px-6 md:px-8 lg:px-12">
+            <p className="text-black text-base md:text-xl lg:text-4xl indent-8 leading-relaxed text-justify">
+              Somos uma fan-made pokedex com o intuito de funcionar como uma
+              PokeDex! Pesquise sobre pokemons que você ainda não
+              conhece no poke10 e aumente seu conhecimento sobre o mundo
+              Pókemon. Entre em nosso catálogo e aprenda mais sobre os pokemons que você gosta e quer saber mais!
+              
             </p>
           </div>
 
           <div className="md:w-1/2 lg:w-1/2 flex justify-end">
-            <div className="relative group">
-              <div className="absolute -top-4 -left-4 lg:-left-6 w-[90%] h-[105%] border-4 border-[#FFDE00] rounded-2xl z-0 pointer-events-none transition-transform group-hover:scale-105" />
+           <div className="relative group">
+            <div className="absolute -top-4 -left-4 lg:-top-6 lg:-left-6 w-full h-full border-4 border-[#FFDE00] rounded-2xl z-0 pointer-events-none transition-transform group-hover:scale-105" />
 
-            
+          <img
+           src="/images/pokedexi.jpeg"
+           alt="pokemon-trade"
+           className="relative w-full h-auto rounded-2xl z-10 pointer-events-none transition-transform group-hover:scale-105"
+             />
             </div>
           </div>
         </div>
       </section>
 
       <section
-        id="nossa-proposta"
+        id="objetivo"
         className="relative scroll-mt-20 min-h-fit py-16 md:py-24 lg:py-32 w-full overflow-hidden flex flex-col items-center"
       >
         <div className="relative z-20 flex flex-col items-center justify-center gap-8 px-20 py-16 md:px-32 md:py-24 lg:px-80 lg:py-32 ">
           <div className="relative z-10 flex items-center justify-center h-full">
             <span className="relative inline-block">
               <span className="relative z-10 font-pokemon text-2xl md:text-3xl lg:text-6xl text-[#FF0000]">
-                Nossa Proposta!
+                Objetivo
               </span>
               <div className="absolute -bottom-2 lg:-bottom-6 -left-6 w-[60%] h-1 lg:h-2 bg-[#FFDE00] z-0 opacity-70 rounded-full" />
             </span>
           </div>
 
-          <div className="flex flex-col text-black text-xs md:text-base lg:text-2xl indent-8 md:p-12 lg:p-12 gap-4">
+          <div className="flex flex-col text-black text-base md:text-xl lg:text-4xl indent-8 md:p-12 lg:p-12 gap-4">
             <p>
-              A proposta desse site é pôr em prática os treinamentos do
+              O objetivo desse site é pôr em prática os treinamentos do
               onboarding, consumindo a PokeAPI e criando uma vitrine com os
               dados recebidos.
             </p>
@@ -146,16 +159,11 @@ export default function Home() {
           </div>
 
           <div className="flex gap-4 items-center">
-            <img
-              src="/images/pokeball.png"
-              alt="pokeball"
-              className="h-20 md:h-32 lg:h-40 -rotate-[15deg] hover:scale-110 transition-transform duration-300"
-            />
             <Link
               href="./vitrine"
               className="flex md:w-64 md:h-12 lg:w-[32rem] lg:h-16"
             >
-              <Button label="Ir para Vitrine" variant="CTA"></Button>
+              <Button label="Visitar a Poke10!" variant="CTA"></Button>
             </Link>
           </div>
         </div>
