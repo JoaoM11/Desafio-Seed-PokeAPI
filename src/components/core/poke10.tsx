@@ -44,7 +44,7 @@ export function Pokedex() {
             <img
               src="/images/PokebolaLogo.webp"
               alt="Logo"
-              className="h-8 md:h-10 lg:h-12 w-auto block"
+              className="h-[64px] w-auto block"
             />
 
             <div className="flex items-center leading-none mt-[-10px] lg:mt-[-10px]">
