@@ -1,4 +1,4 @@
-# Desafio Pokedex
+# Desafio API
 Desafio de construção de uma Dashboard / Vitrine Interativa com Consumo de API Externa
 
 
@@ -24,11 +24,11 @@ Depois, rode o projeto com o comando:
 
 Por fim, acesse a aplicação em seu [LocalHost](http://localhost:3000).
 
-#### API utilizada:
+### API utilizada:
 
 PokéAPI:https://pokeapi.co/docs/v2
 
-#### Perguntas Teóricas de Reflexão
+### Perguntas Teóricas de Reflexão
 
 Por que a busca inicial dos dados na rota /vitrine foi feita em um Server Component em vez de um Client Component?
 
