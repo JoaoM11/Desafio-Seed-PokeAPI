@@ -31,9 +31,14 @@ export default async function PokemonDetailsPage({ params }: PageProps) {
               alt="Logo"
               className="h-[64px] w-auto block"
             />
-            <h1 className="text-xl md:text-2xl font-pokemon text-[#3B4CCA]">
-              Poke<span className="text-[#FF0000]">10</span>
-            </h1>
+            <div className="flex items-center leading-none mt-[-10px] lg:mt-[-10px]">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-pokemon text-[#3B4CCA]">
+                Poke
+              </h1>
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-pokemon text-[#FF0000]">
+                10
+              </h1>
+            </div>
           </Link>
         </div>
       </header>

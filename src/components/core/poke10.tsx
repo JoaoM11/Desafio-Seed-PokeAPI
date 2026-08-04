@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, Heart } from "lucide-react";
 import React, { useEffect, useState, useRef } from "react";
 import { Pokemon, getPokemons, getPokemonDetails } from "../../app/api/api";
 import { Card } from "../ui/card";
@@ -158,6 +158,16 @@ export function Pokedex() {
             </div>
           </Link>
         </div>
+
+        <nav className="flex items-center gap-6 text-black">
+          <Link
+            href="/favoritos"
+            className="flex items-center gap-2 outline outline-2 outline-[#3B4CCA] hover:bg-[#3B4CCA] hover:text-white rounded-lg px-4 py-1 transition-all duration-300 font-bold"
+          >
+            <Heart size={18} />
+            Favoritos
+          </Link>
+        </nav>
       </header>
 
       <div className="pt-16 lg:pt-20 mx-5 md:mx-10 lg:mx-20 min-h-screen pb-10">
@@ -185,7 +195,7 @@ export function Pokedex() {
           </form>
 
           {showSuggestions && (
-            <ul className="absolute left-4 right-14 mt-1 bg-white border-2 border-[#3B4CCA] rounded-lg shadow-lg overflow-hidden z-50">
+            <ul className="absolute left-4 right-14 mt-1 bg-white border-2 border-[#B3A125] rounded-lg shadow-lg overflow-hidden z-50">
               {suggestions.map((name) => (
                 <li key={name}>
                   <button
