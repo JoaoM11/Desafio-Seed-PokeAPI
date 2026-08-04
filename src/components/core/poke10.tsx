@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Pokemon, getPokemons, getPokemonDetails } from "../../app/api/api";
 import { Card } from "../ui/card";
 import Link from "next/link";
@@ -16,6 +16,11 @@ export function Pokedex() {
   const [searchResult, setSearchResult] = useState<Pokemon | null>(null);
   const [searchError, setSearchError] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
+  const [allNames, setAllNames] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -34,11 +39,58 @@ export function Pokedex() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const term = searchTerm.trim().toLowerCase();
+  useEffect(() => {
+    const fetchAllNames = async () => {
+      try {
+        const res = await fetch(
+          "https://pokeapi.co/api/v2/pokemon?limit=151",
+        );
+        const data = await res.json();
+        const names = data.results.map(
+          (p: { name: string }) => p.name,
+        ) as string[];
+        setAllNames(names);
+      } catch (error) {
+        console.error("Error fetching pokemon names:", error);
+      }
+    };
+    fetchAllNames();
+  }, []);
 
-    if (!term) {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        searchBoxRef.current &&
+        !searchBoxRef.current.contains(e.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleInputChange = (value: string) => {
+    setSearchTerm(value);
+
+    const term = value.trim().toLowerCase();
+    if (term.length === 0) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const filtered = allNames
+      .filter((name) => name.includes(term))
+      .slice(0, 6);
+
+    setSuggestions(filtered);
+    setShowSuggestions(filtered.length > 0);
+  };
+
+  const runSearch = async (term: string) => {
+    const cleanTerm = term.trim().toLowerCase();
+    if (!cleanTerm) {
       setSearchResult(null);
       setSearchError("");
       return;
@@ -47,21 +99,35 @@ export function Pokedex() {
     setIsSearching(true);
     setSearchError("");
     setSearchResult(null);
+    setShowSuggestions(false);
 
     try {
-      const pokemon = await getPokemonDetails(term);
+      const pokemon = await getPokemonDetails(cleanTerm);
       setSearchResult(pokemon);
     } catch (error) {
-      setSearchError(`Nenhum pokemon encontrado para "${searchTerm}"`);
+      setSearchError(`Nenhum pokemon encontrado para "${term}"`);
     } finally {
       setIsSearching(false);
     }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    runSearch(searchTerm);
+  };
+
+  const handleSuggestionClick = (name: string) => {
+    setSearchTerm(name);
+    setShowSuggestions(false);
+    runSearch(name);
   };
 
   const clearSearch = () => {
     setSearchTerm("");
     setSearchResult(null);
     setSearchError("");
+    setSuggestions([]);
+    setShowSuggestions(false);
   };
 
   return (
@@ -99,24 +165,41 @@ export function Pokedex() {
           vitrine
         </h2>
 
-        <form
-          onSubmit={handleSearch}
-          className="max-w-md mx-auto mb-10 flex gap-2 px-4"
-        >
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Buscar pokemon pelo nome..."
-            className="flex-1 px-4 py-2 rounded-lg border-2 border-[#3B4CCA] bg-white focus:outline-none focus:border-[#3B4CCA] transition-colors"
-          />
-          <button
-            type="submit"
-            className="p-2 bg-[#3B4CCA] text-white rounded-lg hover:bg-[#2d3aa8] transition-colors"
-          >
-            <Search size={20} />
-          </button>
-        </form>
+        <div ref={searchBoxRef} className="relative max-w-md mx-auto mb-10 px-4">
+          <form onSubmit={handleSearch} className="flex gap-2">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onFocus={() => setShowSuggestions(suggestions.length > 0)}
+              placeholder="Buscar pokemon pelo nome..."
+              autoComplete="off"
+              className="flex-1 px-4 py-2 rounded-lg border-2 border-[#3B4CCA] bg-white focus:outline-none focus:border-[#3B4CCA] transition-colors"
+            />
+            <button
+              type="submit"
+              className="p-2 bg-[#3B4CCA] text-white rounded-lg hover:bg-[#2d3aa8] transition-colors"
+            >
+              <Search size={20} />
+            </button>
+          </form>
+
+          {showSuggestions && (
+            <ul className="absolute left-4 right-14 mt-1 bg-white border-2 border-[#3B4CCA] rounded-lg shadow-lg overflow-hidden z-50">
+              {suggestions.map((name) => (
+                <li key={name}>
+                  <button
+                    type="button"
+                    onClick={() => handleSuggestionClick(name)}
+                    className="w-full text-left px-4 py-2 capitalize hover:bg-[#FFDE00]/30 transition-colors"
+                  >
+                    {name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {searchTerm && (
           <div className="text-center mb-6">
