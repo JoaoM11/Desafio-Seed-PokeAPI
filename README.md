@@ -24,6 +24,10 @@ Depois, rode o projeto com o comando:
 
 Por fim, acesse a aplicação em seu [LocalHost](http://localhost:3000).
 
+OBS: Caso apareça um erro onde o @tailwindcss não foi encontrado use o comando a seguir para forçar a instalação:
+
+> `npm install @tailwindcss/postcss@latest tailwindcss@latest --save`
+
 ### API utilizada:
 
 PokéAPI:https://pokeapi.co/docs/v2
